@@ -1,3 +1,12 @@
+
+/**
+ * Returns all nodes containing tag 'ytd-channel-name' in an associative Object:
+ * {
+ *  username: [...nodes],
+ *  ...
+ * }
+ * @return usernames
+ */
 function getAllUsersOnPage() {
     let userDivs = document.getElementsByTagName("ytd-channel-name");
     let usernames = {};
@@ -12,15 +21,25 @@ function getAllUsersOnPage() {
     return usernames;
 }
 
+/**
+ * 
+ * Look for the node containing the channel name
+ * 
+ */
 function removeItemFromList(userdiv) {
+    //Get parent corresponding to those ids (use content if items doesn't give any result)
     let listItems = userdiv.closest("#items");
     if (listItems == null) {
         listItems = userdiv.closest("#contents");
     }
+
+    //Put all tagnames in a set
     let itemTagNames = new Set();
     listItems.childNodes.forEach(node => {
         itemTagNames.add(node.tagName);
     });
+
+    //For each tagName, find the one that corresponds to our childnode
     itemTagNames.forEach(tagName => {
         let item = userdiv.closest(tagName);
         if (item != null) {
@@ -30,6 +49,11 @@ function removeItemFromList(userdiv) {
     })
 }
 
+/**
+ * Remove all nodes containing names from the blacklist 
+ * 
+ * @param {Array} blacklist 
+ */
 function removeBlackListedUsers(blacklist) {
     let users = getAllUsersOnPage();
     console.log(users)
@@ -39,6 +63,7 @@ function removeBlackListedUsers(blacklist) {
         if (blacklist.includes(username)) {
             let divs = users[username];
             divs.forEach(div => {
+                //Instead of only removing name, remove the node containing the channel name
                 removeItemFromList(div);
             });
         }

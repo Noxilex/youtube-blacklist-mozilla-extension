@@ -3,6 +3,7 @@
     "name": "Youtube Blacklist",
     "version": "1.0",
     "description": "Gives you the possibility to add users to your blacklist so you don't see their channel or content anymore.",
+    "homepage_url": "https://github.com/Noxilex/youtube-blacklist-mozilla-extension",
     "content_scripts": [
         {
             "matches": [
